@@ -7,6 +7,7 @@ const regexUrl =
   /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
 
 const findUrl = (x) => {
+  if (x.archived) return null;
   if (x.homepage?.match("katai5plate.github.io")) return x.homepage;
   if (regexUrl.test(x.description)) {
     const url = x.description.match(regexUrl)?.[0] ?? "";
@@ -24,7 +25,6 @@ const main = async (offset = 0) => {
         }`
       )
     ).json();
-    console.log(res);
     if (res.length) {
       list.innerHTML = ul(
         res
